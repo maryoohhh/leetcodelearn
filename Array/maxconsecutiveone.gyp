@@ -17,10 +17,10 @@ class Solution(object):
         result = 0
         
         # Iterate through the array
-        for i in range(0, nums):
+        for i in nums:
             
             # Reset count when zero is found
-            if (self[i] == 0):
+            if i == 0:
                 count = 0
             
             # If 1 is found, increment count and update
@@ -28,10 +28,3 @@ class Solution(object):
                 count += 1
                 result = max(result,count)
         return result
-            
-    # Driver code
-    self = [1,0,1,1,0,1]
-    
-    nums = len(self)
-    print (findMaxConsecutiveOnes(self, nums))
-    
