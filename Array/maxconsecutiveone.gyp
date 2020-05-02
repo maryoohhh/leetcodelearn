@@ -30,8 +30,7 @@ class Solution(object):
         return result
             
     # Driver code
-    self = [1,0,1,1,0,1]
-    
+    self = [1,1,1,1,0,1,1,1,0,1,1]
     nums = len(self)
     print (findMaxConsecutiveOnes(self, nums))
     
