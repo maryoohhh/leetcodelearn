@@ -11,7 +11,6 @@
 
 class Solution(object):
     def findMaxConsecutiveOnes(self, nums):
-        class Solution(object):
         
         # Initialize counter to zero
         count = 0
