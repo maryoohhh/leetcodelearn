@@ -21,8 +21,14 @@ class Solution(object):
         
         # Initialize counter to zero
         counter = 0
+        length = 0
         
+        # Iterate thru nums
         for i in nums:
-            if (i % 2 == 0):
+            # Count the number of digits a number has
+            length = len(str(abs(i)))
+            
+            # Check and update counter if number of digits is even
+            if (length % 2 == 0):
                 counter += 1
         return counter
