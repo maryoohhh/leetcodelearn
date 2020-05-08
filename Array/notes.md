@@ -347,3 +347,146 @@ Index 5 contains 10.
 The main thing to be careful of is remembering that `array.length` gives you the total capacity of the Array
 
 If you want to know the last used slot, you'll need to keep track of this yourself using a `length` variable.
+
+Deleting Items from an Array
+----------------------------
+
+Deletion in an Array works in a very similar manner to insertion, and has the same three different cases:
+
+1. Deleting the last element of the Array.
+
+2. Deleting the first element of the Array.
+
+3. Deletion at any given index.
+
+**Deleting from the end of an array**
+
+> Deletionat the end of an Array is similar to people standing in a line, also known as a *queue*.
+
+The person who most recently joined the queue can leave at any time without disturbing the rest of the queue.
+
+Deleting at the end of an Array is the least time consuming of the three cases.
+
+*In Java*
+```
+// Declare an integer array of 10 elements.
+int[] intArray = new int[10];
+
+// The array currently contains 0 elements
+int length = 0;
+
+// Add elements at the first 6 indexes of the Array.
+for(int i = 0; i < 6; i++) {
+    intArray[length] = i;
+    length++;
+}
+
+// Deletion from the end is as simple as reducing the length
+// of the array by 1.
+length--;
+
+for (int i = 0; i < intArray.length; i++) {
+    System.out.println("Index " + i + " contains " + intArray[i]);
+}
+```
+
+We'll get the following result,
+```
+Index 0 contains 0.
+Index 1 contains 1.
+Index 2 contains 2.
+Index 3 contains 0.
+Index 4 contains 0.
+Index 5 contains 0.
+Index 6 contains 0.
+Index 7 contains 0.
+Index 8 contains 0.
+Index 9 contains 0.
+```
+
+What's gone wrong? Well, remember how there's two different definitions of length? When we use `intArray.length`, we're looking every valid index of the Array. When in fact, we only want to look at the ones that we've put values into. The fix is easy, we just iterate up to our own `length` variable instead.
+
+*Java*
+```
+for (int i = 0; i < length; i++) {
+    System.out.println("Index " + i + " contains " + intArray[i]);
+}
+```
+
+Run this, and you'll get the following before the deletion:
+
+```
+Index 0 contains 0.
+Index 1 contains 1.
+Index 2 contains 2.
+Index 3 contains 3.
+Index 4 contains 4.
+Index 5 contains 5.
+```
+
+And the following after:
+
+```
+Index 0 contains 0.
+Index 1 contains 1.
+Index 2 contains 2.
+Index 3 contains 3.
+Index 4 contains 4.
+```
+
+**Deleting from the start of an Array**
+
+If we want to delete the first element of the Array, that will create a vacant spot at the 0th index. To fill that spot, we will shift the element at index 1 one step to the left. Going by the ripple effect, every element all the way to the last one will be shifted one place to the left. This shift of elements takes O(N)O(N) time, where NN is the number of elements in the Array.
+
+*Java*
+```
+// Starting at index 1, we shift each element one position
+// to the left.
+for (int i = 1; i < length; i++) {
+    // Shift each element one position to the left
+    int_array[i - 1] = int_array[i];
+}
+
+// Note that it's important to reduce the length of the array by 1.
+// Otherwise, we'll lose consistency of the size. This length
+// variable is the only thing controlling where new elements might
+// get added.
+length--;
+```
+
+Starting from index `0`, we'll move every element one position to its left, effectively "deleting" the element at index `0`. We also need to reduce `length` by `1` so that the next new element is inserted in the correct position.
+
+And here's the output we'll get, with our updated `printArray` function.
+
+```
+Index 0 contains 1.
+Index 1 contains 2.
+Index 2 contains 3.
+Index 3 contains 4.
+```
+
+**Deleting from anywhere in the Array**
+
+For deletion at any given index, the empty space created by the deleted item will need to be filled. Each of the elements to the right of the index we're deleting at will get shifted to the left by one.
+
+This shift of elements takes O(K)O(K) time where KK is the number of elements to the right of the given index. Since potentially K = NK=N, we say that the time complexity of this operation is also O(N).
+
+*Java*
+```
+// Say we want to delete the element at index 1
+for (int i = 2; i < length; i++) {
+    // Shift each element one position to the left
+    int_array[i - 1] = int_array[i];
+}
+
+// Again, the length needs to be consistent with the current
+// state of the array.
+length--;
+```
+
+Here is the output from the `printArray` function.
+```
+Index 0 contains 1.
+Index 1 contains 3.
+Index 2 contains 4.
+```
