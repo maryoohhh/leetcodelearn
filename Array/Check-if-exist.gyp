@@ -11,8 +11,13 @@
 
 class Solution:
     def checkIfExist(self, arr: List[int]) -> bool:
-        for i in range(len(arr)):
-            for j in range(len(arr)):
-                if i != j and arr[i] == arr[j] * 2:
-                    return True
+        s = set()
+
+        for i in arr:
+        	# Checks if i * 2 is in the s list
+            if i * 2 in s: return True
+            # Checks if i is divisible by 2 and if the quotient is in the s list 
+            if i % 2 == 0 and int(i/2) in s: return True
+            # add i in the s list
+            s.add(i)
         return False
